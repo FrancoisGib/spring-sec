@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("test")
 public class BaseController {
-    @PostMapping
-    public String test() {
-        return "test";
-    }
+  @PostMapping
+  public String test() {
+    return "test";
+  }
 }

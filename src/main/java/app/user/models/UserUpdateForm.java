@@ -9,14 +9,14 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class UserUpdateForm {
-    @NotBlank
-    private String username;
+  @NotBlank
+  private String username;
 
-    @NotBlank
-    @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
-    @Email
-    private String email;
+  @NotBlank
+  @Pattern(regexp = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
+  @Email
+  private String email;
 
-    @NotBlank
-    private String password;
+  @NotBlank
+  private String password;
 }
