@@ -5,17 +5,26 @@ import app.jwt.RefreshTokenService;
 import app.jwt.models.JwtResponseDTO;
 import app.jwt.models.RefreshToken;
 import app.jwt.models.RefreshTokenRequestDTO;
+import app.user.UserMapper;
+import app.user.UserService;
+import app.user.exception.UserAlreadyExistsException;
 import app.user.exception.UserNotFoundException;
+import app.user.models.UserCreationForm;
+import app.user.models.UserDTO;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +38,8 @@ public class AuthController {
 	private final JwtService jwtService;
 
 	private final RefreshTokenService refreshTokenService;
+
+	private final UserService userService;
 
 	@Value("${jwt.cookieExpiry}")
 	private Long cookieExpiry;
@@ -57,6 +68,13 @@ public class AuthController {
 		} else {
 			throw new UsernameNotFoundException("invalid user request..!!");
 		}
+	}
+
+	@PutMapping("/register")
+	public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreationForm form)
+		throws UserAlreadyExistsException {
+		return new ResponseEntity<>(UserMapper.INSTANCE.toDto(userService.createUser(form)),
+			HttpStatus.CREATED);
 	}
 
 	@PostMapping("/refresh")

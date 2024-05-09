@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-config
+data:
+  jwt-cookie-expiry: "1600"
+  jwt-refresh-token-expiry: "3600"

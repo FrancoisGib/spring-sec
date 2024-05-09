@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-deployment
+  labels:
+    app: spring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring
+  template:
+    metadata:
+      labels:
+        app: spring
+    spec:
+      containers:
+      - name: spring
+        image: francoisgib/tuto:spring
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: postgres
+        - name: DB_URL
+          value: postgres-service
+
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: spring-secret
+              key: jwt-secret
+        - name: JWT_COOKIE_EXPIRY
+          valueFrom:
+            configMapKeyRef:
+              name: spring-config
+              key: jwt-cookie-expiry
+        - name: JWT_REFRESH_TOKEN_EXPIRY
+          valueFrom:
+            configMapKeyRef:
+              name: spring-config
+              key: jwt-refresh-token-expiry
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-service
+  labels:
+    app: spring
+spec:
+  type: NodePort
+  selector:
+    app: spring
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30000
