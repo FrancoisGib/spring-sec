@@ -4,3 +4,7 @@ kubectl port-forward pod/spring-deployment-idpod 8080:8080
 
 port = le port accessible en dehors du service
 targetPort = port du pod
+
+
+pour un ingress controller
+minikube tunnel

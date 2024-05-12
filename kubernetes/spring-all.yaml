@@ -21,7 +21,7 @@ metadata:
   labels:
     app: spring
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: spring
@@ -84,7 +84,7 @@ metadata:
   labels:
     app: spring
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: spring
   ports:
