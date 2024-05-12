@@ -1,3 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-config
+data:
+  jwt-cookie-expiry: "1600"
+  jwt-refresh-token-expiry: "3600"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: spring-secret
+type: Opaque
+data:
+  jwt-secret: MzU3NjM4NzkyRjQyM0Y0NDI4NDcyQjRCNjI1MDY1NTM2ODU2NkQ1OTcxMzM3NDM2NzczOTdBMjQ0MzI2NDYyOQ==
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

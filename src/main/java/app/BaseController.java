@@ -1,14 +1,15 @@
 package app;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("test")
+@RequestMapping("/")
 public class BaseController {
-  @PostMapping
+  private static final int NUMBER = (int) (Math.random() * 100);
+  @GetMapping("/test")
   public String test() {
-    return "test";
+    return String.valueOf(NUMBER);
   }
 }

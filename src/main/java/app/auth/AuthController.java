@@ -46,14 +46,13 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public JwtResponseDTO authenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO,
-												  HttpServletResponse response)
+			HttpServletResponse response)
 			throws UserNotFoundException {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(),
 						authRequestDTO.getPassword()));
 		if (authentication.isAuthenticated()) {
-			RefreshToken refreshToken =
-					refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
+			RefreshToken refreshToken = refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
 			String accessToken = jwtService.generateToken(authRequestDTO.getUsername());
 			ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
 					.httpOnly(true)
@@ -72,9 +71,9 @@ public class AuthController {
 
 	@PutMapping("/register")
 	public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserCreationForm form)
-		throws UserAlreadyExistsException {
+			throws UserAlreadyExistsException {
 		return new ResponseEntity<>(UserMapper.INSTANCE.toDto(userService.createUser(form)),
-			HttpStatus.CREATED);
+				HttpStatus.CREATED);
 	}
 
 	@PostMapping("/refresh")

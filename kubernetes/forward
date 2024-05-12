@@ -1,0 +1,6 @@
+kubectl port-forward pod/spring-deployment-idpod 8080:8080
+                                                local_port:remote_port
+                                                listen sur port, redirige vers le remote_port dans le service
+
+port = le port accessible en dehors du service
+targetPort = port du pod

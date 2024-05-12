@@ -40,7 +40,7 @@ public class SecurityConfig {
 			"/**")); // ignore csrf debloque aussi les routes pas besoin de authorize
 
 		http.authorizeHttpRequests(authorize -> authorize
-			.requestMatchers("/login", "/register", "/refresh")
+			.requestMatchers("/login", "/register", "/refresh", "/test")
 			.permitAll());
 
 		http.authorizeHttpRequests(authorize -> authorize
