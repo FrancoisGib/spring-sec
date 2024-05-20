@@ -5,6 +5,9 @@ import app.user.exception.UserNotFoundException;
 import app.user.models.User;
 import app.user.models.UserCreationForm;
 import app.user.models.UserUpdateForm;
+import app.user.models.UsersCountByDate;
+
+import java.util.Date;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,8 +36,12 @@ public class UserService {
   public User createUser(UserCreationForm form) throws UserAlreadyExistsException {
 	try {
 	  return userRepository.save(
-		  User.builder().username(form.getUsername()).email(form.getEmail())
-			  .password(passwordEncoder.encode(form.getPassword())).build());
+		  User.builder()
+			  .username(form.getUsername())
+			  .email(form.getEmail())
+			  .password(passwordEncoder.encode(form.getPassword()))
+			  .accountCreationDate(new Date(System.currentTimeMillis()))
+			  .build());
 	} catch (Exception e) {
 	  throw new UserAlreadyExistsException(form.getUsername());
 	}
@@ -57,5 +64,9 @@ public class UserService {
   public void deleteUser(Long id) throws UserNotFoundException {
 	User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 	userRepository.delete(user);
+  }
+
+  public List<UsersCountByDate> getUsersBetweenDatesAndAllUsers(Date start, Date end) {
+	return userRepository.getAllUsersCountAndCountByDate(start, end);
   }
 }

@@ -12,11 +12,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 public class CustomUserDetails extends User implements UserDetails {
+	private final Long id;
 	private final String username;
 	private final String password;
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public CustomUserDetails(User user) {
+		this.id = user.getId();
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 		List<GrantedAuthority> auths = new ArrayList<>();

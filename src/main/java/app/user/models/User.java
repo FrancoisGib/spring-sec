@@ -9,6 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -39,4 +42,8 @@ public class User {
   @Column(name = "password", nullable = false)
   @JsonIgnore
   private String password;
+
+  @Temporal(TemporalType.DATE)
+  @Column(name = "account_creation_date", nullable = false)
+  private Date accountCreationDate;
 }
