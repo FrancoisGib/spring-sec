@@ -16,8 +16,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query(value =
     """
-    SELECT count(t1) as allUsersCount, count(t2) as monthUsersCount FROM user_app as t1 LEFT JOIN
-    (SELECT * FROM user_app WHERE account_creation_date BETWEEN :start AND :end) t2 on t2 = t1
+        SELECT
+            (
+            SELECT COUNT(*)
+            FROM   user_app
+            ) AS allUsersCount,
+            (
+            SELECT COUNT(*)
+            FROM user_app WHERE account_creation_date BETWEEN :start and :end
+            ) AS monthUsersCount;
     """, nativeQuery = true)
   List<UsersCountByDate> getAllUsersCountAndCountByDate(@Param("start") Date start, @Param("end") Date end);
 }
