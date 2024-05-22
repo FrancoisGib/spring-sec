@@ -1,4 +1,4 @@
-package app.user.models;
+package app.users.models;
 
 public interface UsersCountByDate {
 	Integer getAllUsersCount();

@@ -1,7 +1,7 @@
 package app.config;
 
 import app.jwt.JwtAuthFilter;
-import app.user.details.UserDetailsServiceImpl;
+import app.users.details.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,9 +27,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 	private final JwtAuthFilter jwtAuthFilter;
 
+	private final UserDetailsServiceImpl userDetailsService;
+
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return new UserDetailsServiceImpl();
+		return userDetailsService;
 	}
 
 	@Bean
@@ -48,7 +50,6 @@ public class SecurityConfig {
 			.sessionManagement(
 				security -> security.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-		//http.authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll());
 		return http.build();
 	}
 

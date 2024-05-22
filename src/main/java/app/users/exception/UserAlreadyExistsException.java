@@ -1,4 +1,4 @@
-package app.user.exception;
+package app.users.exception;
 
 public class UserAlreadyExistsException extends Exception {
   public UserAlreadyExistsException(String username) {

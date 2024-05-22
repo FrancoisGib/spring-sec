@@ -1,8 +1,8 @@
 package app.jwt;
 
-import app.user.details.CustomUserDetails;
-import app.user.details.UserDetailsServiceImpl;
-import app.user.details.UserPrincipleDetails;
+import app.users.details.CustomUserDetails;
+import app.users.details.UserDetailsServiceImpl;
+import app.users.details.UserPrincipalDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -40,7 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			if (username != null) {
 				CustomUserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
 				if (jwtService.validateToken(token, userDetails)) {
-					UserPrincipleDetails userPrincipleDetails = new UserPrincipleDetails(userDetails.getId(), userDetails.getUsername());
+					UserPrincipalDetails userPrincipleDetails = new UserPrincipalDetails(userDetails.getId(), userDetails.getUsername());
 
 					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 						userPrincipleDetails, null,

@@ -1,10 +1,8 @@
-package app.user;
+package app.users;
 
-import app.user.exception.UserNotFoundException;
-import app.user.models.DatesForm;
-import app.user.models.UserDTO;
-import app.user.models.UserUpdateForm;
-import app.user.models.UsersCountByDate;
+import app.users.exception.UserNotFoundException;
+import app.users.models.UserDTO;
+import app.users.models.UserUpdateForm;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -50,10 +48,5 @@ public class UserController {
   public ResponseEntity<List<UserDTO>> getAllUsers() {
 	return new ResponseEntity<>(UserMapper.INSTANCE.toDto(userService.getAllUsers()),
 		HttpStatus.OK);
-  }
-
-  @PostMapping ("/date")
-  ResponseEntity<List<UsersCountByDate>> getUsersBetweenDatesAndAllUsers(@RequestBody DatesForm form) {
-	  return ResponseEntity.ok(userService.getUsersBetweenDatesAndAllUsers(form.getStart(), form.getEnd()));
   }
 }

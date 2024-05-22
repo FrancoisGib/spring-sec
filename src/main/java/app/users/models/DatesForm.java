@@ -1,4 +1,4 @@
-package app.user.models;
+package app.users.models;
 
 import jakarta.validation.constraints.NotNull;
 import java.util.Date;

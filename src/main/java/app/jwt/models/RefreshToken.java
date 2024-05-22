@@ -1,6 +1,6 @@
 package app.jwt.models;
 
-import app.user.models.User;
+import app.users.models.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

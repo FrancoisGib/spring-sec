@@ -1,4 +1,4 @@
-package app.user.exception;
+package app.users.exception;
 
 public class UserNotFoundException extends Exception {
   public UserNotFoundException(Long id) {

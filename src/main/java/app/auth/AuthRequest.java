@@ -1,7 +1,6 @@
 package app.auth;
 
-import app.user.models.UserRole;
-import java.util.Set;
+import app.users.roles.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +14,5 @@ public class AuthRequest {
   private Long id;
   private String username;
   private String password;
-  private Set<UserRole> roles;
+  private Role role;
 }

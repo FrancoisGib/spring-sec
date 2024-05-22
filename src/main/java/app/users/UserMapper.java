@@ -1,7 +1,7 @@
-package app.user;
+package app.users;
 
-import app.user.models.User;
-import app.user.models.UserDTO;
+import app.users.models.User;
+import app.users.models.UserDTO;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

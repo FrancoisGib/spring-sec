@@ -1,8 +1,8 @@
 package app.jwt;
 
 import app.jwt.models.RefreshToken;
-import app.user.UserRepository;
-import app.user.exception.UserNotFoundException;
+import app.users.UserRepository;
+import app.users.exception.UserNotFoundException;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;

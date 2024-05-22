@@ -1,7 +1,7 @@
-package app.user;
+package app.users;
 
-import app.user.models.User;
-import app.user.models.UsersCountByDate;
+import app.users.models.User;
+import app.users.models.UsersCountByDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

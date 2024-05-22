@@ -1,7 +1,7 @@
-package app.user.details;
+package app.users.details;
 
-import app.user.models.User;
-import app.user.models.UserRole;
+import app.users.models.User;
+import app.users.roles.Permission;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +9,7 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 @Getter
 public class CustomUserDetails extends User implements UserDetails {
@@ -22,8 +23,8 @@ public class CustomUserDetails extends User implements UserDetails {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 		List<GrantedAuthority> auths = new ArrayList<>();
-		for (UserRole role : user.getRoles()) {
-			auths.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
+		for (Permission permission: user.getRole().getPermissions()) {
+			auths.add(new SimpleGrantedAuthority(permission.getName()));
 		}
 		this.authorities = auths;
 	}

@@ -1,7 +1,7 @@
 package app;
 
-import app.user.exception.UserAlreadyExistsException;
-import app.user.exception.UserNotFoundException;
+import app.users.exception.UserAlreadyExistsException;
+import app.users.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
