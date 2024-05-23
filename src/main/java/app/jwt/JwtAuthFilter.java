@@ -32,6 +32,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			for (Cookie cookie : request.getCookies()) {
 				if (cookie.getName().equals("accessToken")) {
 					token = cookie.getValue();
+				} else if (cookie.getName().equals("refreshToken")) {
+					token = cookie.getValue();
+					String username = jwtService.extractUsername(token);
+					if (username != null) {
+						jwtService.generateToken(username);
+					} else {
+						token = null;
+					}
 				}
 			}
 		}

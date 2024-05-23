@@ -3,6 +3,7 @@ package app.jwt;
 import app.jwt.models.RefreshToken;
 import app.users.UserRepository;
 import app.users.exception.UserNotFoundException;
+import app.users.models.User;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +22,14 @@ public class RefreshTokenService {
 	private Long jwtRefreshExpiry;
 
 	public RefreshToken createRefreshToken(String username) throws UserNotFoundException {
+		User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException(username));
+		RefreshToken token = refreshTokenRepository.findByUserInfo(user);
+		if (token != null) {
+			token = verifyExpiration(token);
+			if (token != null) {
+				return token;
+			}
+		}
 		RefreshToken refreshToken = RefreshToken.builder()
 			.userInfo(userRepository.findByUsername(username)
 				.orElseThrow(() -> new UserNotFoundException(username)))

@@ -24,7 +24,7 @@ public class UserController {
   private final UserService userService; // pas besoin d'autowired car RequiredArgsConstructor
 
   @GetMapping("/{id}")
-  @PreAuthorize("#id == authentication.principal.id")
+  @PreAuthorize("@authz.canReadSelf('user:read', #id) || @authz.isAdmin")
   public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) throws UserNotFoundException {
 	return new ResponseEntity<>(UserMapper.INSTANCE.toDto(userService.getUserById(id)),
 		HttpStatus.FOUND);
@@ -44,6 +44,7 @@ public class UserController {
 	return new ResponseEntity<>(HttpStatus.OK);
   }
 
+  @PreAuthorize("@authz.isAdmin")
   @GetMapping
   public ResponseEntity<List<UserDTO>> getAllUsers() {
 	return new ResponseEntity<>(UserMapper.INSTANCE.toDto(userService.getAllUsers()),

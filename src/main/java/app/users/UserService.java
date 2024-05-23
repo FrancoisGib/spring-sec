@@ -19,4 +19,6 @@ public interface UserService {
 	User updateUser(Long id, UserUpdateForm form) throws UserNotFoundException;
 
 	void deleteUser(Long id) throws UserNotFoundException;
+
+	User getUserByUsername(String username) throws UserNotFoundException;
 }

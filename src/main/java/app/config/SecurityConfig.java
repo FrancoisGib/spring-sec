@@ -59,8 +59,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public AuthenticationProvider authenticationProvider(
-		UserDetailsServiceImpl userDetailsServiceImpl) {
+	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(userDetailsService());
 		authenticationProvider.setPasswordEncoder(passwordEncoder());
@@ -71,5 +70,10 @@ public class SecurityConfig {
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
 		throws Exception {
 		return config.getAuthenticationManager();
+	}
+
+	@Bean
+	public MyAuthorizer authz() {
+		return new MyAuthorizer();
 	}
 }
