@@ -1,12 +1,11 @@
 package app;
 
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class AppApplicationTests {
 
 	/*@Test
 	void contextLoads() {
 	}*/
-
 }

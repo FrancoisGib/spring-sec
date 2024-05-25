@@ -30,7 +30,7 @@ public class UserController {
 		HttpStatus.FOUND);
   }
 
-  @PostMapping("/{id}")
+  @PostMapping("/up/{id}")
   public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,
 											@Valid @RequestBody UserUpdateForm form)
 	  throws UserNotFoundException {

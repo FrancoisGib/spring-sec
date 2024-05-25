@@ -19,6 +19,50 @@
         <checkstyle.config.location>src/checkstyle/checkstyle.xml</checkstyle.config.location>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>default</id>
+            <properties>
+                <env>default</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <repository>
+            <id>francoisgib54</id>
+            <url>https://pkgs.dev.azure.com/francoisgib54/_packaging/francoisgib54/maven/v1</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>francoisgib54</id>
+            <url>https://pkgs.dev.azure.com/francoisgib54/_packaging/francoisgib54/maven/v1</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -91,12 +135,31 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
         </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>app</finalName>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-help-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>show-profiles</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>active-profiles</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -144,20 +207,20 @@
                 <version>0.8.7</version>
                 <executions>
                     <execution>
-                        <id>prepare-agent</id>
+                        <id>coverage-initialize</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>report</id>
+                        <id>jacoco-site</id>
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>check-coverage</id>
+                        <id>jacoco-check</id>
                         <phase>test</phase>
                         <goals>
                             <goal>check</goal>
@@ -165,15 +228,12 @@
                         <configuration>
                             <rules>
                                 <rule>
-                                    <element>CLASS</element>
-                                    <excludes>
-                                        <exclude>*Test</exclude>
-                                    </excludes>
+                                    <element>PACKAGE</element>
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0%</minimum>
+                                            <minimum>0</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -214,6 +274,15 @@
                         <version>9.3</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <profiles>
+                        <profile>${env}</profile>
+                    </profiles>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -5,6 +5,7 @@ import app.users.exception.UserNotFoundException;
 import app.users.models.User;
 import app.users.models.UserCreationForm;
 import app.users.models.UserUpdateForm;
+import app.users.roles.RoleRepository;
 import app.users.roles.RoleService;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoleService roleService;
+
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -65,6 +69,10 @@ public class UserServiceImpl implements UserService {
 		}
 		if (form.getEmail() != null) {
 			user.setEmail(form.getEmail());
+		}
+
+		if (form.getRoleId() != null) {
+			user.setRole(roleRepository.findById(form.getRoleId()).orElseThrow());
 		}
 		return userRepository.save(user);
 	}

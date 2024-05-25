@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://francoisgibbdd.database.windows.net:1433;database=francoisgibbdd;user=francoisgib@francoisgibbdd;password=${AZURE_DB_PASSWORD};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect

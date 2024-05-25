@@ -1,0 +1,54 @@
+trigger:
+  batch: true
+  branches:
+    exclude:
+      - "*"
+  paths:
+    exclude:
+      - "*"
+
+pool: Default
+
+steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk 7.0.x'
+      inputs:
+        version: 7.0.x
+
+    - task: Maven@4
+      displayName: "Maven Clean"
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean'
+        publishJUnitResults: false
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+    - task: Maven@4
+      displayName: "Maven Install"
+      inputs:
+        options: "-Dmaven.test.skip"
+        mavenPomFile: 'pom.xml'
+        goals: 'install'
+        publishJUnitResults: false
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+    - task: Maven@3
+      displayName: "Maven Test"
+      inputs:
+        mavenPomFile: "pom.xml"
+        goals: "test"
+    - task: PublishTestResults@2
+      displayName: "Publish test results"
+      inputs:
+        testResultsFormat: "JUnit"
+    - task: PublishCodeCoverageResults@2
+      displayName: "Publish publish code coverage"
+      inputs:
+        summaryFileLocation: $(System.DefaultWorkingDirectory)/target/site/jacoco/jacoco.xml
+        pathToSources: $(System.DefaultWorkingDirectory)/src/main/java/
